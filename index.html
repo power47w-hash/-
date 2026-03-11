@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 𝑃𝑂𝑊𝐸𝑅 |  EmojiTools ✨ </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- الخلفية الأسطورية -->
+    <div class="legendary-bg"></div>
+    <div class="galaxy-spiral"></div>
+    <div class="magic-stars" id="magic-stars"></div>
+    <div class="golden-meteors" id="golden-meteors"></div>
+    <div class="legendary-glow">
+        <div class="glow-corner glow-tl"></div>
+        <div class="glow-corner glow-tr"></div>
+        <div class="glow-corner glow-bl"></div>
+        <div class="glow-corner glow-br"></div>
+    </div>
+
+    <!-- شريط التنقل -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <h1 class="logo">✨ Emoji<span>Tools</span></h1>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">الإيموجي</a></li>
+                <li><a href="symbols.html">الرموز</a></li>
+                <li><a href="name-tools.html">تعديل الأسماء</a></li>
+                <!-- أيقونة الديسكورد مع مسافة -->
+                <li class="discord-item">
+                    <a href="https://discord.gg/PR4" target="_blank" class="discord-link" title="انضم إلى سيرفر الديسكورد">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" width="24" height="24" class="discord-icon">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        <h2 class="page-title">😊 مكتبة الإيموجي <span>اختر الفئة ثم انسخ ما تريد</span></h2>
+        
+        <!-- أزرار الفئات -->
+        <div class="categories-bar" id="emoji-categories">
+            <button class="category-btn active" data-category="all">الكل</button>
+            <button class="category-btn" data-category="faces">وجوه وتعابير😃</button>
+            <button class="category-btn" data-category="hearts">قلوب ورموز💕</button>
+            <button class="category-btn" data-category="animals">الناس 🧑</button>
+            <button class="category-btn" data-category="food">حيوانات وطيور🐻</button>
+            <button class="category-btn" data-category="activities">المأكولات والمشروبات🍔</button>
+            <button class="category-btn" data-category="objects"> السفر والأماكن🚀</button>
+            <button class="category-btn" data-category="symbols">رموز وإشارات💡</button>
+            <button class="category-btn" data-category="flags">أعلام🎌</button>
+        </div>
+        
+        <!-- شبكة الإيموجي -->
+        <div class="emoji-grid" id="emoji-grid"></div>
+    </main>
+
+    <!-- رسالة النسخ -->
+    <div class="copy-toast" id="copy-toast">✅ تم النسخ!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

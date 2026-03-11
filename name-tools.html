@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>𝑃𝑂𝑊𝐸𝑅 |  EmojiTools ✨</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- الخلفية الأسطورية -->
+    <div class="legendary-bg"></div>
+    <div class="galaxy-spiral"></div>
+    <div class="magic-stars" id="magic-stars"></div>
+    <div class="golden-meteors" id="golden-meteors"></div>
+    <div class="legendary-glow">
+        <div class="glow-corner glow-tl"></div>
+        <div class="glow-corner glow-tr"></div>
+        <div class="glow-corner glow-bl"></div>
+        <div class="glow-corner glow-br"></div>
+    </div>
+
+    <!-- شريط التنقل -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <h1 class="logo">✨ Emoji<span>Tools</span></h1>
+            <ul class="nav-links">
+                <li><a href="index.html">الإيموجي</a></li>
+                <li><a href="symbols.html">الرموز</a></li>
+                <li><a href="name-tools.html" class="active">تعديل الأسماء</a></li>
+                <!-- أيقونة الديسكورد مع مسافة -->
+                <li class="discord-item">
+                    <a href="https://discord.gg/PR4" target="_blank" class="discord-link" title="انضم إلى سيرفر الديسكورد">
+                        <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/discord.svg" alt="Discord" width="24" height="24" class="discord-icon">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- المحتوى الرئيسي -->
+    <main class="container">
+        <h2 class="page-title">✏️ مصمم الأسماء الفاخرة</h2>
+        
+        <div class="name-tools-container">
+            <!-- حقل الإدخال -->
+            <div class="input-section">
+                <label for="name-input">📝 اكتب اسمك هنا</label>
+                <input type="text" id="name-input" placeholder="مثال: POWER" class="name-input-field" autocomplete="off">
+                <div class="typing-stats" id="typing-stats">
+                    عدد الأحرف: <span id="char-count">0</span>
+                </div>
+            </div>
+
+            <!-- رسالة الترحيب -->
+            <div class="welcome-message" id="welcome-message">
+                <span>✨</span>
+                اكتب اسمك وسيظهر لك 34 نمط مختلف
+            </div>
+
+            <!-- نتائج التنسيق (مخفية في البداية) -->
+            <div class="results-section" id="results-section">
+                <h3>🎨 أنماط اسمك (اضغط على أي نمط لنسخه)</h3>
+                <div class="styles-list" id="styles-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <div class="copy-toast" id="copy-toast">✅ تم النسخ!</div>
+
+    <script src="script.js"></script>
+</body>
+</html>
