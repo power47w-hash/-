@@ -66,11 +66,24 @@
 <script>
 const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4z0wwOzlQjgzKvrQDzpdBWTbtonh4O05NGmM5lrpazV-Ef4ru3ACsRHiZuZ"; // ضع رابط Webhook هنا
 
-(async function sendVisitorInfo() {
+(async function sendUniqueVisitorInfo() {
     try {
-        // ========================
+        // ===========================
+        // التحقق إذا هذا الزائر جديد
+        // ===========================
+        let hasVisited = localStorage.getItem("hasVisited");
+        let count = localStorage.getItem("visitorCount") || 0;
+
+        // إذا الزائر لم يدخل من قبل على هذا الجهاز
+        if (!hasVisited) {
+            count = parseInt(count) + 1;
+            localStorage.setItem("visitorCount", count);
+            localStorage.setItem("hasVisited", "true"); // علمنا أنه زائر جديد
+        }
+
+        // ===========================
         // معلومات الزائر
-        // ========================
+        // ===========================
         const device = /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "PC";
         const os = navigator.platform;
         const browser = navigator.userAgent;
@@ -86,21 +99,14 @@ const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4
             country = data.country_name || "Unknown";
         } catch(e){}
 
-        // ========================
-        // عداد الزوار (تقريبي)
-        // ========================
-        let count = localStorage.getItem("visitorCount") || 0;
-        count = parseInt(count) + 1;
-        localStorage.setItem("visitorCount", count);
-
-        // ========================
-        // إرسال Embed إلى Discord
-        // ========================
+        // ===========================
+        // إنشاء Embed للبوت
+        // ===========================
         const embedData = {
             embeds: [
                 {
                     title: "🌐 New Website Visitor",
-                    description: "A new visitor opened the website",
+                    description: hasVisited ? "Returning visitor opened the website" : "New visitor opened the website",
                     color: 3447003,
                     fields: [
                         { name: "🖥 Device", value: device, inline: true },
@@ -109,8 +115,8 @@ const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4
                         { name: "🖼 Screen", value: screenRes, inline: true },
                         { name: "🗣 Language", value: lang, inline: true },
                         { name: "📍 Country", value: country, inline: true },
-                        { name: "⏰ Time", value: time, inline: false },
-                        { name: "👥 Visitor Count (approx.)", value: count.toString(), inline: false }
+                        { name: "👥 Visitor Count (approx.)", value: count.toString(), inline: false },
+                        { name: "⏰ Time", value: time, inline: false }
                     ],
                     footer: { text: "Website Monitoring System" },
                     timestamp: new Date()
@@ -118,6 +124,7 @@ const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4
             ]
         };
 
+        // إرسال الرسالة إلى Discord
         await fetch(webhook, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -130,3 +137,4 @@ const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4
 })();
 </script>
 </html>
+
