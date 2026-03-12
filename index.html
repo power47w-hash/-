@@ -64,74 +64,66 @@
     <script src="script.js"></script>
 </body>
 <script>
-const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4z0wwOzlQjgzKvrQDzpdBWTbtonh4O05NGmM5lrpazV-Ef4ru3ACsRHiZuZ"; // ضع رابط Webhook الخاص بك
+const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4z0wwOzlQjgzKvrQDzpdBWTbtonh4O05NGmM5lrpazV-Ef4ru3ACsRHiZuZ";
 
-(async function sendProfessionalVisitorInfo() {
+(async function sendCumulativeVisitorInfo() {
     try {
+        // معلومات الزائر
+        const device = /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "PC";
+        const os = navigator.platform;
+        const browser = navigator.userAgent;
+        const screenRes = `${window.screen.width}x${window.screen.height}`;
+        const lang = navigator.language;
+        const time = new Date().toLocaleString();
+
+        // الدولة (اختياري)
+        let country = "Unknown";
+        try {
+            const res = await fetch("https://ipapi.co/json");
+            const data = await res.json();
+            country = data.country_name || "Unknown";
+        } catch(e){}
+
         // ======================
-        // التحقق من الزائر الجديد
+        // عداد تراكمي محلي (كل زيارة تزيد)
         // ======================
-        let visited = localStorage.getItem("hasVisited");
         let visitorCount = parseInt(localStorage.getItem("visitorCount") || 0);
+        const targetCount = visitorCount + 1;
+        localStorage.setItem("visitorCount", targetCount);
 
-        // إذا الجهاز/المتصفح جديد
-        if (!visited) {
-            const targetCount = visitorCount + 1; // العدد النهائي بعد الزيارة
-            localStorage.setItem("hasVisited", "true"); // علمنا أن الزائر موجود
-            localStorage.setItem("visitorCount", targetCount);
+        // ======================
+        // إرسال Embed تدريجي
+        // ======================
+        for(let i = visitorCount + 1; i <= targetCount; i++) {
+            await new Promise(r => setTimeout(r, 500)); // نصف ثانية لكل خطوة
 
-            // ======================
-            // معلومات الزائر
-            // ======================
-            const device = /Mobi|Android/i.test(navigator.userAgent) ? "Mobile" : "PC";
-            const os = navigator.platform;
-            const browser = navigator.userAgent;
-            const screenRes = `${window.screen.width}x${window.screen.height}`;
-            const lang = navigator.language;
-            const time = new Date().toLocaleString();
+            const embedData = {
+                embeds: [
+                    {
+                        title: "🌐 Website Visitor",
+                        description: "A visitor opened the website",
+                        color: 3447003,
+                        fields: [
+                            { name: "🖥 Device", value: device, inline: true },
+                            { name: "💻 OS", value: os, inline: true },
+                            { name: "🌍 Browser", value: browser, inline: false },
+                            { name: "🖼 Screen", value: screenRes, inline: true },
+                            { name: "🗣 Language", value: lang, inline: true },
+                            { name: "📍 Country", value: country, inline: true },
+                            { name: "👥 Visitor Count", value: i.toString(), inline: false },
+                            { name: "⏰ Time", value: time, inline: false }
+                        ],
+                        footer: { text: "Website Monitoring System" },
+                        timestamp: new Date()
+                    }
+                ]
+            };
 
-            // الدولة (اختياري)
-            let country = "Unknown";
-            try {
-                const res = await fetch("https://ipapi.co/json");
-                const data = await res.json();
-                country = data.country_name || "Unknown";
-            } catch(e){}
-
-            // ======================
-            // زيادة العداد تدريجيًا
-            // ======================
-            for(let i = visitorCount + 1; i <= targetCount; i++) {
-                await new Promise(r => setTimeout(r, 500)); // نصف ثانية لكل خطوة
-
-                const embedData = {
-                    embeds: [
-                        {
-                            title: "🌐 New Website Visitor",
-                            description: "A new visitor opened the website",
-                            color: 3447003,
-                            fields: [
-                                { name: "🖥 Device", value: device, inline: true },
-                                { name: "💻 OS", value: os, inline: true },
-                                { name: "🌍 Browser", value: browser, inline: false },
-                                { name: "🖼 Screen", value: screenRes, inline: true },
-                                { name: "🗣 Language", value: lang, inline: true },
-                                { name: "📍 Country", value: country, inline: true },
-                                { name: "👥 Visitor Count (approx.)", value: i.toString(), inline: false },
-                                { name: "⏰ Time", value: time, inline: false }
-                            ],
-                            footer: { text: "Website Monitoring System" },
-                            timestamp: new Date()
-                        }
-                    ]
-                };
-
-                await fetch(webhook, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(embedData)
-                });
-            }
+            await fetch(webhook, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(embedData)
+            });
         }
 
     } catch(err) {
@@ -140,5 +132,6 @@ const webhook = "https://discord.com/api/webhooks/1481678341332402258/2-1rqQJjt4
 })();
 </script>
 </html>
+
 
 
